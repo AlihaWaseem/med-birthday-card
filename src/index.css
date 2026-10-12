@@ -1,0 +1,262 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Cute Romantic Background Mesh & Grid */
+.bg-romantic-mesh {
+  background-color: #0b0914;
+  background-image: 
+    radial-gradient(at 10% 10%, rgba(244, 63, 94, 0.15) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, rgba(236, 72, 153, 0.12) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(168, 85, 247, 0.08) 0px, transparent 50%),
+    radial-gradient(at 80% 90%, rgba(244, 63, 94, 0.12) 0px, transparent 50%),
+    radial-gradient(at 20% 90%, rgba(20, 184, 166, 0.1) 0px, transparent 50%);
+}
+
+.bg-cute-grid {
+  background-image: 
+    linear-gradient(to right, rgba(244, 63, 94, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(244, 63, 94, 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Lovely Glassmorphism */
+.cute-glass {
+  background: rgba(23, 17, 35, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(244, 63, 94, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(244, 63, 94, 0.1);
+}
+
+.cute-glass:hover {
+  border-color: rgba(244, 63, 94, 0.45);
+}
+
+/* Glow Effects */
+.glow-pink {
+  box-shadow: 0 0 35px -5px rgba(244, 63, 94, 0.35);
+}
+
+.glow-purple {
+  box-shadow: 0 0 35px -5px rgba(168, 85, 247, 0.35);
+}
+
+.glow-heart {
+  filter: drop-shadow(0 0 12px rgba(244, 63, 94, 0.7));
+}
+
+/* Floating animation */
+@keyframes cuteFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1.5deg); }
+}
+
+.animate-cute-float {
+  animation: cuteFloat 4s ease-in-out infinite;
+}
+
+/* ==========================================
+   CLOUD JOURNEY SKY — raat ka chamakdar aasman
+   ==========================================*/
+.bg-cloud-sky {
+  background-color: #0a0716;
+  background-image:
+    radial-gradient(2px 2px at 12% 22%, rgba(255,255,255,0.7) 40%, transparent 41%),
+    radial-gradient(1.5px 1.5px at 78% 12%, rgba(255,255,255,0.6) 40%, transparent 41%),
+    radial-gradient(2px 2px at 55% 35%, rgba(244,114,182,0.6) 40%, transparent 41%),
+    radial-gradient(1.5px 1.5px at 30% 65%, rgba(255,255,255,0.5) 40%, transparent 41%),
+    radial-gradient(2px 2px at 88% 72%, rgba(192,132,252,0.6) 40%, transparent 41%),
+    radial-gradient(1.5px 1.5px at 42% 88%, rgba(255,255,255,0.55) 40%, transparent 41%),
+    radial-gradient(at 15% 8%, rgba(244,63,94,0.16) 0px, transparent 50%),
+    radial-gradient(at 85% 25%, rgba(168,85,247,0.14) 0px, transparent 50%),
+    radial-gradient(at 50% 70%, rgba(236,72,153,0.1) 0px, transparent 55%),
+    radial-gradient(at 20% 95%, rgba(56,189,248,0.08) 0px, transparent 50%);
+}
+
+/* Doll: idle gentle floating */
+@keyframes dollIdle {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+.doll-idle {
+  animation: dollIdle 2.6s ease-in-out infinite;
+}
+
+/* Doll: jump when she hops to the next cloud */
+@keyframes dollJump {
+  0%   { transform: translateY(0) scale(1, 1) rotate(0deg); }
+  15%  { transform: translateY(8px) scale(1.15, 0.8) rotate(-4deg); }
+  45%  { transform: translateY(-46px) scale(0.9, 1.15) rotate(10deg); }
+  70%  { transform: translateY(-30px) scale(1, 1.05) rotate(4deg); }
+  88%  { transform: translateY(6px) scale(1.12, 0.85) rotate(-3deg); }
+  100% { transform: translateY(0) scale(1, 1) rotate(0deg); }
+}
+.doll-jump {
+  animation: dollJump 0.85s cubic-bezier(0.34, 1.4, 0.5, 1) 1, dollIdle 2.6s ease-in-out 0.9s infinite;
+}
+
+/* ==========================================
+   FLUFFY CLOUD — colorful hone par poore
+   silhouette par soft glow (drop-shadow
+   merged shape par lagta hai, boxes par nahi)
+   ==========================================*/
+.cloud-lit {
+  filter: drop-shadow(0 10px 28px rgba(244, 114, 182, 0.35)) drop-shadow(0 0 45px rgba(255, 255, 255, 0.18));
+}
+
+/* 🎂 Cake Intro Page */
+.cake-flame {
+  width: 13px;
+  height: 17px;
+  border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%;
+  background: radial-gradient(circle at 50% 78%, #FDE047 0%, #FBBF24 45%, #F97316 78%, rgba(249, 115, 22, 0) 100%);
+  box-shadow: 0 0 12px 4px rgba(251, 191, 36, 0.55);
+  transform-origin: 50% 100%;
+  animation: flameFlicker 0.32s ease-in-out infinite alternate;
+}
+.cake-flame-glow {
+  position: absolute;
+  inset: -16px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(253, 224, 71, 0.30), transparent 70%);
+  pointer-events: none;
+}
+@keyframes flameFlicker {
+  from { transform: scale(1) rotate(-4deg); }
+  to { transform: scale(1.12, 0.9) rotate(4deg); }
+}
+.candle-stripe {
+  background: repeating-linear-gradient(45deg, #F9A8D4 0 6px, #FFFFFF 6px 12px);
+}
+@keyframes loadingBar {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.animate-loading-bar {
+  animation: loadingBar 1.4s ease-in-out forwards;
+}
+
+/* ==========================================
+   12-SECOND SILENCE ☁️🖤
+   ==========================================*/
+/* Saans leta hua andhera — dead black nahi lagta */
+@keyframes veilBreathe {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50%      { opacity: 0.6;  transform: scale(1.06); }
+}
+.veil-breathe {
+  background: radial-gradient(circle at 50% 55%, rgba(236, 72, 153, 0.09) 0%, rgba(10, 7, 22, 0) 55%);
+  animation: veilBreathe 6.5s ease-in-out infinite;
+}
+
+/* "…typing" dots */
+@keyframes typingDot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
+  30%           { transform: translateY(-5px); opacity: 1; }
+}
+.typing-dot {
+  animation: typingDot 1.35s ease-in-out infinite;
+}
+
+/* Typing caret */
+@keyframes caretBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.caret-blink {
+  animation: caretBlink 0.9s step-end infinite;
+}
+
+/* Reduced motion: silence chhota aur simple */
+@media (prefers-reduced-motion: reduce) {
+  .veil-breathe { animation: none; opacity: 0.4; }
+  .typing-dot { animation-duration: 2.2s; }
+  .caret-blink { animation: none; opacity: 0.7; }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0914;
+}
+::-webkit-scrollbar-thumb {
+  background: #2d1b3e;
+  border-radius: 4px;
+  border: 1px solid rgba(244, 63, 94, 0.3);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f43f5e;
+}
+
+/* ==========================================
+   STAR NAME REVEAL ✨ — silence ke baad ka wow
+   ==========================================*/
+@keyframes starLetter {
+  0%   { opacity: 0; transform: translateY(14px) scale(1.7); filter: blur(6px); }
+  55%  { opacity: 1; filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+.star-letter {
+  display: inline-block;
+  opacity: 0;
+  animation: starLetter 0.85s cubic-bezier(0.2, 1.3, 0.4, 1) forwards;
+}
+/* Glow gradient-clipped text par text-shadow se nahi banta,
+   is liye container par drop-shadow lagta hai */
+.name-glow {
+  filter: drop-shadow(0 0 14px rgba(244, 114, 182, 0.75)) drop-shadow(0 0 34px rgba(192, 132, 252, 0.45));
+}
+
+/* Tolti hui sitaron ki lakeer */
+@keyframes shootingStar {
+  0%   { opacity: 0; transform: translate3d(-10vw, 0, 0) rotate(18deg) scaleX(0.2); }
+  12%  { opacity: 1; }
+  70%  { opacity: 0.9; }
+  100% { opacity: 0; transform: translate3d(110vw, 42vh, 0) rotate(18deg) scaleX(1); }
+}
+.shooting-star {
+  position: absolute;
+  height: 2px;
+  width: 130px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(253,224,171,0.9) 65%, #fff 100%);
+  filter: drop-shadow(0 0 8px rgba(255,255,255,0.8));
+  animation: shootingStar 2.6s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .star-letter { animation-duration: 0.35s; }
+  .shooting-star { animation-duration: 1.2s; }
+}
+
+/* Print Styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-sanad, #printable-sanad * {
+    visibility: visible;
+  }
+  #printable-sanad {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    background: white !important;
+    color: black !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
