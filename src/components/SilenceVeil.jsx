@@ -71,6 +71,8 @@ export default function SilenceVeil({ onLift }) {
     });
     at(T.type, () => {
       setPhase('line');
+      // 🎙️🥰 Pyari soft voice mein "Happy birthday" — black screen ke waqt
+      medicalSynth.speakHappyBirthday('Happy birthday');
       let i = 0;
       typeInterval.current = setInterval(() => {
         i += 1;

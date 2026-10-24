@@ -15,15 +15,45 @@ import { medicalSynth } from '../audio/medicalSynth';
 // sound muted, taake andhera sachcha lage.
 // ==========================================
 
+const WISH_KEY = 'alisha_cloud5_wish';
+
 export default function CloudJourney({ onProceedToScanner, bestieName = 'Alisha Fiaz' }) {
   const [activeStage, setActiveStage] = useState(0);
   const [celebrationActive, setCelebrationActive] = useState(false);
   const [songStarted, setSongStarted] = useState(false);
   const [silenceOn, setSilenceOn] = useState(false);
   const [silenceDone, setSilenceDone] = useState(false);
+  // 💌 Cloud 5: uski apni line (do awaazein — alag style)
+  const [wish, setWish] = useState('');
+  const [draft, setDraft] = useState('');
+  const [editing, setEditing] = useState(false);
   const sentinelRef = useRef(null);
   const silenceRan = useRef(false);
   const muteBeforeSilence = useRef(false);
+  const autoFireworksRan = useRef(false);
+
+  // localStorage se uski pehle likhi line wapas laao
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(WISH_KEY);
+      if (saved) setWish(saved);
+    } catch (e) {}
+  }, []);
+
+  const submitWish = () => {
+    const val = draft.trim();
+    if (!val) return;
+    setWish(val);
+    setEditing(false);
+    try { localStorage.setItem(WISH_KEY, val); } catch (e) {}
+    medicalSynth.playSparkle();
+  };
+
+  const startEditWish = () => {
+    setDraft(wish);
+    setEditing(true);
+    medicalSynth.playCutePop();
+  };
 
   // 🖤 Silence shuru — sound foran band (sync), taake koi sparkle
   // andhera ke saath leak na ho. Sirf ek baar poore journey mein.
@@ -57,6 +87,7 @@ export default function CloudJourney({ onProceedToScanner, bestieName = 'Alisha 
   }, [activeStage]);
 
   // 🎵 Veil uthta hi: sound wapas, Cloud 7 par scroll, song shuru
+  //   aur 7th cloud aate hi FIREWORKS KHUD-Ba-KHUD 🎉
   const handleSilenceLift = () => {
     medicalSynth.setMuted(muteBeforeSilence.current);
     setSilenceDone(true);
@@ -65,6 +96,11 @@ export default function CloudJourney({ onProceedToScanner, bestieName = 'Alisha 
       const c7 = document.getElementById('cloud-7');
       if (c7) c7.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 250);
+    // 🎆 Cloud 7 nazar aate hi automatic fireworks (koi button nahi)
+    if (!autoFireworksRan.current) {
+      autoFireworksRan.current = true;
+      setTimeout(() => setCelebrationActive(true), 1000);
+    }
     if (!songStarted) {
       setSongStarted(true);
       // Pehle naam aasman par likha jaye (~3s), phir music box
@@ -86,10 +122,10 @@ export default function CloudJourney({ onProceedToScanner, bestieName = 'Alisha 
     }
   };
 
-  // 🎵 Button press karte HE foran fireworks + fanfare
+  // 🎆 Button: sirf fireworks replay (song chal rahi hai — fanfare stack NAHI)
   const handleGrandFinale = () => {
     setCelebrationActive(true);
-    medicalSynth.playBirthdayFanfare();
+    medicalSynth.playSparkle();
   };
 
   // Sirf aik line dikhane ka simple style
@@ -145,11 +181,59 @@ export default function CloudJourney({ onProceedToScanner, bestieName = 'Alisha 
           </Say>
         </CloudStage>
 
-        {/* CLOUD 5 — IZHAR (Armaan) */}
-        <CloudStage index={4} name="Izhar" meaning="Armaan" theme="amber" onEnter={setActiveStage} onLit={handleCloudLit}>
+        {/* CLOUD 5 — IZHAR (Armaan) — yahan WO likhti hai 🖊️ */}
+        <CloudStage index={4} name="Izhar" meaning="Armaan" theme="amber" golden={!!wish && !editing} onEnter={setActiveStage} onLit={handleCloudLit}>
           <Say>
             "Meri little butterfly, aaj sirf tumhari baat maani jaayegi... bolo, kya chahiye mujh se 🎁"
           </Say>
+
+          {/* Uski apni line — alag style (white monospace) = uski awaaz */}
+          {wish && !editing && (
+            <div className="mt-4 text-left">
+              <div className="text-[11px] font-mono text-amber-200/90 tracking-wide mb-1">✍️ TUMHARI LINE:</div>
+              <p className="font-mono text-white text-base sm:text-lg bg-slate-950/50 border border-amber-300/60 rounded-2xl px-4 py-3 shadow-inner">
+                “{wish}”
+              </p>
+              <button
+                onClick={startEditWish}
+                className="mt-2 text-[11px] font-mono text-amber-200/80 underline decoration-dotted hover:text-white transition-colors"
+              >
+                ✏️ kuch badalna hai?
+              </button>
+            </div>
+          )}
+
+          {(!wish || editing) && (
+            <form
+              onSubmit={(e) => { e.preventDefault(); submitWish(); }}
+              className="mt-4 flex flex-col sm:flex-row gap-2 text-left"
+            >
+              <input
+                type="text"
+                value={draft}
+                onChange={(e) => { setDraft(e.target.value.slice(0, 120)); medicalSynth.playCutePop(); }}
+                placeholder="Apni ek line likho…"
+                maxLength={120}
+                className="flex-1 px-4 py-2.5 rounded-xl bg-slate-950/60 border border-pink-400/50 text-white font-mono text-sm placeholder:text-pink-200/50 focus:outline-none focus:border-amber-300 transition-colors"
+              />
+              <button
+                type="submit"
+                disabled={!draft.trim()}
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-300 text-amber-950 font-mono font-bold text-sm shadow-lg disabled:opacity-50 disabled:cursor-not-allowed hover:brightness-105 transition-all whitespace-nowrap"
+              >
+                💌 GOLD KAR DO
+              </button>
+              {editing && (
+                <button
+                  type="button"
+                  onClick={() => setEditing(false)}
+                  className="px-4 py-2.5 rounded-xl bg-slate-900/80 border border-pink-400/40 text-pink-200 font-mono text-xs hover:text-white transition-colors"
+                >
+                  cancel
+                </button>
+              )}
+            </form>
+          )}
         </CloudStage>
 
         {/* CLOUD 6 — MANJURI (Kamyabi) */}
@@ -168,6 +252,12 @@ export default function CloudJourney({ onProceedToScanner, bestieName = 'Alisha 
             "Aaj tera birthday hai... aur aisa ho sakta hai ke kisi ke paas developer dost ho
             aur usse koi aisa surprise na mile?! 😎"
           </Say>
+          {/* 💫 Finale par uski line goonjti hai (uski awaaz = white monospace) */}
+          {wish && (
+            <p className="mt-3 font-mono text-white/90 text-sm sm:text-base bg-slate-950/40 border border-pink-300/40 rounded-2xl px-4 py-2.5 text-left">
+              💫 Aur tumhari wo line — “{wish}” — poori jindagi yaad rahegi.
+            </p>
+          )}
           {/* ✨ WOW moment: khamoshi ke baad uska naam aasman par */}
           {silenceDone && <StarNameReveal name={bestieName} />}
           <div className="mt-4 p-4 rounded-2xl bg-slate-950/70 border-2 border-pink-400/60 text-center space-y-3">

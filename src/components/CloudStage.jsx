@@ -15,10 +15,11 @@ export const CLOUD_THEMES = {
   amber: { puff: 'bg-amber-100', body: 'bg-amber-100', chip: 'bg-amber-400/95 border-amber-100 text-slate-900' },
   violet: { puff: 'bg-violet-200', body: 'bg-violet-200', chip: 'bg-violet-500/90 border-violet-100 text-white' },
   rainbow: { puff: 'bg-pink-100', body: 'bg-pink-100', chip: 'bg-gradient-to-r from-pink-500 to-purple-500 border-white/70 text-white' },
+  gold: { puff: 'bg-amber-200', body: 'bg-amber-200', chip: 'bg-gradient-to-r from-amber-400 to-yellow-300 border-white text-amber-950' },
   dull: { puff: 'bg-slate-600', body: 'bg-slate-600', chip: 'bg-slate-800 border-slate-600 text-slate-400' },
 };
 
-export default function CloudStage({ index, name, meaning, theme = 'pink', children, onEnter, onLit }) {
+export default function CloudStage({ index, name, meaning, theme = 'pink', golden = false, children, onEnter, onLit }) {
   const sectionRef = useRef(null);
   const [inView, setInView] = useState(false);
   const [lit, setLit] = useState(false);
@@ -68,7 +69,7 @@ export default function CloudStage({ index, name, meaning, theme = 'pink', child
     if (lit) medicalSynth.playSparkle();
   }, [lit]);
 
-  const t = lit ? CLOUD_THEMES[theme] : CLOUD_THEMES.dull;
+  const t = golden ? CLOUD_THEMES.gold : lit ? CLOUD_THEMES[theme] : CLOUD_THEMES.dull;
 
   return (
     <section
@@ -79,7 +80,7 @@ export default function CloudStage({ index, name, meaning, theme = 'pink', child
       <div
         className={`relative w-full max-w-2xl transition-all duration-[1200ms] ease-out ${
           lit ? 'cloud-lit scale-100 rotate-0' : 'opacity-70 scale-[0.88] -rotate-1'
-        }`}
+        } ${golden ? 'cloud-engrave' : ''}`}
       >
         {/* ---------- CLOUD SILHOUETTE (behind body) ---------- */}
         {/* Upar wale bade bumps */}

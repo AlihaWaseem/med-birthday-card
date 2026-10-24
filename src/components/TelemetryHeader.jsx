@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { medicalSynth } from '../audio/medicalSynth';
 
 export default function TelemetryHeader({
   stage = 1,
@@ -6,6 +7,14 @@ export default function TelemetryHeader({
   onStageSelect,
   bestieName = 'Alisha Fiaz'
 }) {
+  const [muted, setMuted] = useState(medicalSynth.isUserMuted());
+
+  const toggleMute = () => {
+    const nowMuted = medicalSynth.toggleUserMuted();
+    setMuted(nowMuted);
+    if (!nowMuted) medicalSynth.playSparkle();
+  };
+
   const stageLabels = {
     1: '🔐 DARWAZA',
     2: '☁️ SAFAR',
@@ -57,8 +66,19 @@ export default function TelemetryHeader({
           })}
         </nav>
 
-        {/* Right: Birthday pulse */}
+        {/* Right: Birthday pulse + Mute */}
         <div className="flex items-center gap-2 font-mono text-[10px]">
+          <button
+            onClick={toggleMute}
+            title={muted ? 'Sound on karo 🔊' : 'Sound off karo 🔇'}
+            className={`px-2.5 py-1 rounded-full border transition-all active:scale-95 ${
+              muted
+                ? 'border-slate-700 bg-slate-800/80 text-slate-400 hover:text-pink-200'
+                : 'border-pink-500/50 bg-pink-500/15 text-pink-200 hover:text-white'
+            }`}
+          >
+            {muted ? '🔇 MUTED' : '🔊 SOUND'}
+          </button>
           <span className={`px-2 py-1 rounded-full border ${
             isAuthenticated
               ? 'border-pink-500/50 bg-pink-500/15 text-pink-300'

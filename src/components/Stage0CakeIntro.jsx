@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { medicalSynth } from '../audio/medicalSynth';
+import BearIntro from './BearIntro';
 
 // ==========================================
 // 🎂 STAGE 0 — CAKE INTRO PAGE
@@ -11,11 +12,13 @@ import { medicalSynth } from '../audio/medicalSynth';
 const TOTAL_STEPS = 7; // 0 loading ... 6 lit, 7 ready (hint)
 
 export default function Stage0CakeIntro({ onCandleClick }) {
+  const [bearsDone, setBearsDone] = useState(false);
   const [step, setStep] = useState(0);
   const [litCount, setLitCount] = useState(0);
 
-  // Auto-advance: cake banata jata hai
+  // Auto-advance: cake banata jata hai (sirf bears urr jane KE BAAD)
   useEffect(() => {
+    if (!bearsDone) return;
     if (step >= TOTAL_STEPS) return;
     const delays = [1400, 700, 700, 700, 800, 800, 600]; // loading lamba, baaki layers fast
     const t = setTimeout(() => {
@@ -29,10 +32,11 @@ export default function Stage0CakeIntro({ onCandleClick }) {
       });
     }, delays[Math.min(step, delays.length - 1)]);
     return () => clearTimeout(t);
-  }, [step]);
+  }, [step, bearsDone]);
 
   // Candles ek ek karke jalti hain (step 6 par)
   useEffect(() => {
+    if (!bearsDone) return;
     if (step < 6) return;
     if (litCount >= 5) {
       const done = setTimeout(() => setStep(7), 400);
@@ -58,8 +62,11 @@ export default function Stage0CakeIntro({ onCandleClick }) {
   const candles = [0, 1, 2, 3, 4];
 
   return (
-    <div className="min-h-[calc(100vh-64px)] flex flex-col items-center justify-center p-6 relative overflow-hidden">
-      
+    <>
+      {/* 🧸🚁 Bear intro — cake se PEHLAY, ek hi baar */}
+      {!bearsDone && <BearIntro onComplete={() => setBearsDone(true)} />}
+
+      <div className={`min-h-[calc(100vh-64px)] flex flex-col items-center justify-center p-6 relative overflow-hidden ${bearsDone ? '' : 'hidden'}`}>
       {/* Title */}
       <div className="text-center mb-8 space-y-2">
         <h1 className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-rose-200 to-purple-300">
@@ -157,6 +164,7 @@ export default function Stage0CakeIntro({ onCandleClick }) {
         </button>
       </div>
 
-    </div>
+      </div>
+    </>
   );
 }

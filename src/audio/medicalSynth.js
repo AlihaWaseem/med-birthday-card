@@ -3,8 +3,35 @@
 
 let audioCtx = null;
 let isMuted = false;
+let userMuted = false; // MUTE button ki asli intent (voice bhi isse chalti hai)
 let scannerOscillator = null;
 let scannerGainNode = null;
+let cachedVoice = null;
+
+// Web Speech se ek pyari soft voice chunna (English female preferred)
+function pickCuteVoice() {
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices || !voices.length) return;
+  const prefs = [
+    /Google UK English Female/i,
+    /Microsoft Hazel/i, /Microsoft Zira/i, /Microsoft Aria/i,
+    /Samantha/i, /Female/i,
+    /^en-US$/i, /^en-GB$/i, /en/i,
+  ];
+  for (const p of prefs) {
+    const v = voices.find((vc) => p.test(vc.name) || p.test(vc.lang));
+    if (v) { cachedVoice = v; return; }
+  }
+  cachedVoice = voices.find((vc) => /^en/i.test(vc.lang)) || voices[0];
+}
+
+if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+  try {
+    window.speechSynthesis.onvoiceschanged = () => pickCuteVoice();
+    pickCuteVoice();
+  } catch (e) {}
+}
 
 function getAudioContext() {
   if (!audioCtx) {
@@ -36,6 +63,42 @@ export const medicalSynth = {
   toggleMute() {
     this.setMuted(!isMuted);
     return isMuted;
+  },
+
+  // 🎙️ Global MUTE button: oscillator + voice dono band
+  isUserMuted() {
+    return userMuted;
+  },
+
+  setUserMuted(muted) {
+    userMuted = muted;
+    this.setMuted(muted);
+    if (muted && typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+    }
+  },
+
+  toggleUserMuted() {
+    this.setUserMuted(!userMuted);
+    return userMuted;
+  },
+
+  // 🎙️🥰 Pyari soft voice se "Happy birthday!" bulwana
+  speakHappyBirthday(text = 'Happy birthday!') {
+    if (userMuted) return;
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+    try {
+      const synth = window.speechSynthesis;
+      synth.cancel();
+      if (!cachedVoice) pickCuteVoice();
+      const u = new SpeechSynthesisUtterance(text);
+      if (cachedVoice) u.voice = cachedVoice;
+      u.lang = (cachedVoice && cachedVoice.lang) || 'en-US';
+      u.pitch = 1.7;  // unchi + narm = cute
+      u.rate = 0.92;  // thora ahista
+      u.volume = 1;
+      synth.speak(u);
+    } catch (e) {}
   },
 
   // Sweet gentle heart monitor chime
