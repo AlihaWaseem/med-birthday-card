@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { medicalSynth } from '../audio/medicalSynth';
 
-export const Stage3XRayScanner = ({ onProceedToPrescription, bestieName = 'Alisha Fiaz' }) => {
+export const Stage3XRayScanner = ({ onTriggerCelebration, bestieName = 'Alisha Fiaz' }) => {
   const containerRef = useRef(null);
   const [pos, setPos] = useState({ x: 260, y: 200 });
   const [isScanning, setIsScanning] = useState(false);
@@ -318,7 +318,7 @@ export const Stage3XRayScanner = ({ onProceedToPrescription, bestieName = 'Alish
         <div className="mt-4 p-4 rounded-2xl bg-pink-950/60 border border-pink-500/60 flex items-center justify-between text-xs font-mono text-pink-200 animate-fadeIn shadow-lg glow-pink">
           <span className="flex items-center gap-2">
             <span className="text-xl">🦋🌌</span>
-            <span><strong>NAQSHA MUKAMMAL:</strong> Alisha ka dil sitaron bhara nikla — ab uski Degree par likhte hain!</span>
+            <span><strong>NAQSHA MUKAMMAL:</strong> Alisha ka dil sitaron bhara nikla — 100% pakki yaari! 🎂</span>
           </span>
           <span className="text-pink-300 font-bold shrink-0">100% PAKKI ✨</span>
         </div>
@@ -327,13 +327,13 @@ export const Stage3XRayScanner = ({ onProceedToPrescription, bestieName = 'Alish
       <div className="mt-8 text-center">
         <button
           onClick={() => {
-            medicalSynth.playSparkle();
-            if (onProceedToPrescription) onProceedToPrescription();
+            medicalSynth.playBirthdayFanfare();
+            if (onTriggerCelebration) onTriggerCelebration();
           }}
           className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-mono font-bold text-sm tracking-wide transition-all shadow-xl hover:shadow-pink-500/30 inline-flex items-center gap-2 group"
         >
-          <span>Degree of Friendship DEKHO (STAGE 4)</span>
-          <span className="group-hover:translate-x-1 transition-transform">📜 →</span>
+          <span>JASHN MANAO — MOHAR LAGAO</span>
+          <span className="group-hover:translate-x-1 transition-transform">🎂💥</span>
         </button>
       </div>
 

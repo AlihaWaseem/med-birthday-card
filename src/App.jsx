@@ -4,7 +4,6 @@ import Stage0CakeIntro from './components/Stage0CakeIntro';
 import { Stage1AuthGate } from './components/Stage1AuthGate';
 import CloudJourney from './components/CloudJourney';
 import { Stage3XRayScanner } from './components/Stage3XRayScanner';
-import { Stage4PrescriptionPad } from './components/Stage4PrescriptionPad';
 import FireworksCanvas from './components/FireworksCanvas';
 import { ButterfliesOverlay } from './components/ButterfliesOverlay';
 import { medicalSynth } from './audio/medicalSynth';
@@ -14,8 +13,7 @@ import { medicalSynth } from './audio/medicalSynth';
 // Stage 0: 🎂 Cake Intro (layers → candles → click)
 // Stage 1: 🔐 Darwaza (PIN gate)
 // Stage 2: ☁️ Safar — 7 clouds + 12-sec khamoshi + ✨ naam
-// Stage 3: 🌌 Dil Ki Tashreeh (sitaron ka naqsha)
-// Stage 4: 📜 Sanad-e-Dosti (4 hukm + mohar)
+// Stage 3: 🌌 Dil Ki Tashreeh (sitaron ka naqsha) — yahin card mukammal hota hai + jashn
 // ==========================================
 
 export const CONFIG = {
@@ -43,10 +41,6 @@ export default function App() {
     if (s > 1 && !isAuthenticated) return;
     medicalSynth.playBeep(660, 0.06);
     setStage(s);
-  };
-
-  const handleTriggerCelebration = () => {
-    setCelebrationActive(true);
   };
 
   return (
@@ -91,16 +85,8 @@ export default function App() {
 
         {stage === 3 && (
           <Stage3XRayScanner
-            onProceedToPrescription={() => setStage(4)}
+            onTriggerCelebration={() => setCelebrationActive(true)}
             bestieName={CONFIG.bestieName}
-          />
-        )}
-
-        {stage === 4 && (
-          <Stage4PrescriptionPad
-            onTriggerCelebration={handleTriggerCelebration}
-            bestieName={CONFIG.bestieName}
-            dateString={CONFIG.birthdayDate}
           />
         )}
       </main>

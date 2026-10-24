@@ -18,8 +18,7 @@ export default function TelemetryHeader({
   const stageLabels = {
     1: '🔐 DARWAZA',
     2: '☁️ SAFAR',
-    3: '🌌 TASHREEH',
-    4: '📜 SANAD'
+    3: '🌌 TASHREEH'
   };
 
   return (
@@ -43,7 +42,7 @@ export default function TelemetryHeader({
 
         {/* Middle: Stage pills */}
         <nav className="flex items-center gap-1.5 font-mono text-[10px]">
-          {[1, 2, 3, 4].map((s) => {
+          {[1, 2, 3].map((s) => {
             const locked = s > 1 && !isAuthenticated;
             const active = s === stage;
             return (

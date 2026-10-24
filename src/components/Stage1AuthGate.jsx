@@ -8,7 +8,7 @@ export const Stage1AuthGate = ({
   bestieName = 'Alisha Fiaz'
 }) => {
   const [passcode, setPasscode] = useState('');
-  const [badgeId, setBadgeId] = useState('AF-SANAD-2710');
+  const [badgeId, setBadgeId] = useState('AF-BIRTHDAY-2710');
   const [statusMessage, setStatusMessage] = useState('DOSTI KI FILE BAND HAI: APNA BIRTHDAY PIN DALO (DDMM) 🦋');
   const [isError, setIsError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -205,7 +205,7 @@ export const Stage1AuthGate = ({
             {/* Birthday Girl Badge */}
             <div>
               <label className="block text-xs font-mono text-pink-300 uppercase mb-1.5 flex items-center justify-between">
-                <span>Birthday Girl ID (Sanad #)</span>
+                <span>Birthday Girl ID</span>
                 <span className="text-[10px] text-pink-400">OFFICIAL BIRTHDAY GIRL 🎂</span>
               </label>
               <div className="relative">

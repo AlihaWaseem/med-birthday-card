@@ -263,26 +263,3 @@
   .star-letter { animation-duration: 0.35s; }
   .shooting-star { animation-duration: 1.2s; }
 }
-
-/* Print Styles */
-@media print {
-  body * {
-    visibility: hidden;
-  }
-  #printable-sanad, #printable-sanad * {
-    visibility: visible;
-  }
-  #printable-sanad {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    margin: 0;
-    padding: 20px;
-    background: white !important;
-    color: black !important;
-  }
-  .no-print {
-    display: none !important;
-  }
-}
