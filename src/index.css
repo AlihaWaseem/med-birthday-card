@@ -95,6 +95,41 @@
     radial-gradient(at 50% 80%, rgba(251,191,36,0.12) 0px, transparent 55%);
 }
 
+/* ==========================================
+   GALAXY HEART INTRO — bears ki jagah
+   ==========================================*/
+.bg-galaxy {
+  background-color: #06030f;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% 38%, rgba(120, 60, 180, 0.35) 0px, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 20% 25%, rgba(244, 114, 182, 0.22) 0px, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 82% 70%, rgba(56, 189, 248, 0.16) 0px, transparent 55%),
+    radial-gradient(ellipse 90% 70% at 50% 100%, rgba(168, 85, 247, 0.18) 0px, transparent 60%),
+    linear-gradient(180deg, #0a0620 0%, #06030f 100%);
+}
+
+/* "my love" — handwriting-style glowing text dil ke center mein */
+.my-love-text {
+  font-family: 'Segoe Script', 'Brush Script MT', 'Comic Sans MS', cursive;
+  font-size: clamp(2.4rem, 9vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: linear-gradient(90deg, #fbcfe8, #f9a8d4, #c084fc, #fbcfe8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 14px rgba(244, 114, 182, 0.55));
+}
+
+/* Fade-in (pehle undefined tha) */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-fadeIn {
+  animation: fadeIn 1.1s ease-out both;
+}
+
 /* Doll: idle gentle floating */
 @keyframes dollIdle {
   0%, 100% { transform: translateY(0) rotate(-2deg); }
