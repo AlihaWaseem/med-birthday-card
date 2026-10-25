@@ -6,6 +6,7 @@ import SilenceVeil from './SilenceVeil';
 import StarNameReveal from './StarNameReveal';
 import { ButterfliesOverlay } from './ButterfliesOverlay';
 import { celebrationSynth } from '../audio/celebrationSynth';
+import { fireCelebrationConfetti } from '../utils/confetti';
 
 // ==========================================
 // CLOUD JOURNEY — sirf USER ki lines, kuch bhi
@@ -99,7 +100,10 @@ export default function CloudJourney({ onProceedToScanner, bestieName = 'Alisha 
     // 🎆 Cloud 7 nazar aate hi automatic fireworks (koi button nahi)
     if (!autoFireworksRan.current) {
       autoFireworksRan.current = true;
-      setTimeout(() => setCelebrationActive(true), 1000);
+      setTimeout(() => {
+        setCelebrationActive(true);
+        fireCelebrationConfetti();
+      }, 1000);
     }
     if (!songStarted) {
       setSongStarted(true);
@@ -125,6 +129,7 @@ export default function CloudJourney({ onProceedToScanner, bestieName = 'Alisha 
   // 🎆 Button: sirf fireworks replay (song chal rahi hai — fanfare stack NAHI)
   const handleGrandFinale = () => {
     setCelebrationActive(true);
+    fireCelebrationConfetti();
     celebrationSynth.playSparkle();
   };
 

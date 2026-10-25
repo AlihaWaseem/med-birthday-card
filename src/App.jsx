@@ -5,8 +5,10 @@ import { Stage1AuthGate } from './components/Stage1AuthGate';
 import CloudJourney from './components/CloudJourney';
 import { Stage3DilKiTashreeh } from './components/Stage3DilKiTashreeh';
 import FireworksCanvas from './components/FireworksCanvas';
+import CelebrationEndCard from './components/CelebrationEndCard';
 import { ButterfliesOverlay } from './components/ButterfliesOverlay';
 import { celebrationSynth } from './audio/celebrationSynth';
+import { fireCelebrationConfetti } from './utils/confetti';
 
 // ==========================================
 // 🎂 ALISHA FIAZ — BIRTHDAY GIRL WORLD
@@ -14,6 +16,7 @@ import { celebrationSynth } from './audio/celebrationSynth';
 // Stage 1: 🔐 Darwaza (PIN gate)
 // Stage 2: ☁️ Safar — 7 clouds + 12-sec khamoshi + ✨ naam
 // Stage 3: 🌌 Dil Ki Tashreeh (sitaron ka naqsha) — yahin card mukammal hota hai + jashn
+// End:     🎂 Jashn Mukammal card — "Phir se shuru" replay loop
 // ==========================================
 
 export const CONFIG = {
@@ -25,6 +28,8 @@ export default function App() {
   const [stage, setStage] = useState(0);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [celebrationActive, setCelebrationActive] = useState(false);
+  const [showEndCard, setShowEndCard] = useState(false);
+  const [runId, setRunId] = useState(0); // replay par poora stage subtree remount
 
   useEffect(() => {
     // Console easter egg
@@ -43,11 +48,27 @@ export default function App() {
     setStage(s);
   };
 
+  const handleReplay = () => {
+    setShowEndCard(false);
+    setStage(0);
+    setIsAuthenticated(true); // PIN dobara mat maango — seedha jashn dobara
+    setRunId((r) => r + 1);
+    celebrationSynth.playSparkle();
+    fireCelebrationConfetti();
+  };
+
   return (
     <div className="relative min-h-screen text-slate-100 font-display overflow-x-hidden selection:bg-pink-500 selection:text-white bg-romantic-mesh">
       {/* Cloud journey aur cake stage apne overlays khud manage karte hain */}
-      {stage !== 2 && <ButterfliesOverlay />}
-      <FireworksCanvas active={celebrationActive} onComplete={() => setCelebrationActive(false)} />
+      {stage !== 2 && <ButterfliesOverlay key={`bf-${runId}`} />}
+      <FireworksCanvas
+        active={celebrationActive}
+        onComplete={() => {
+          setCelebrationActive(false);
+          // Stage 3 ka final jashn khatam → end card
+          setShowEndCard(true);
+        }}
+      />
 
       {stage > 0 && (
         <JourneyHeader
@@ -58,7 +79,7 @@ export default function App() {
         />
       )}
 
-      <main className="relative z-10">
+      <main className="relative z-10" key={`run-${runId}`}>
         {stage === 0 && (
           <Stage0CakeIntro
             onCandleClick={() => {
@@ -90,6 +111,14 @@ export default function App() {
           />
         )}
       </main>
+
+      {showEndCard && (
+        <CelebrationEndCard
+          onReplay={handleReplay}
+          onStay={() => setShowEndCard(false)}
+          bestieName={CONFIG.bestieName}
+        />
+      )}
     </div>
   );
 }

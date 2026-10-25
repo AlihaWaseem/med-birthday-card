@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { celebrationSynth } from '../audio/celebrationSynth';
+import { fireCelebrationConfetti } from '../utils/confetti';
 
 export const Stage3DilKiTashreeh = ({ onTriggerCelebration, bestieName = 'Alisha Fiaz' }) => {
   const containerRef = useRef(null);
@@ -328,6 +329,7 @@ export const Stage3DilKiTashreeh = ({ onTriggerCelebration, bestieName = 'Alisha
         <button
           onClick={() => {
             celebrationSynth.playBirthdayFanfare();
+            fireCelebrationConfetti();
             if (onTriggerCelebration) onTriggerCelebration();
           }}
           className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-mono font-bold text-sm tracking-wide transition-all shadow-xl hover:shadow-pink-500/30 inline-flex items-center gap-2 group"
