@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { medicalSynth } from '../audio/medicalSynth';
+import { celebrationSynth } from '../audio/celebrationSynth';
 
 // ==========================================
 // 🌌 GALAXY HEART INTRO — bears ki jagah (Stage 0 se pehle)
@@ -268,11 +268,11 @@ export default function GalaxyHeartIntro({ onComplete }) {
     s.clicked = true;
     s.startT = performance.now();
     setClicked(true);
-    medicalSynth.playSparkle();
+    celebrationSynth.playSparkle();
   };
 
   const handleProceed = () => {
-    medicalSynth.playBirthdayFanfare();
+    celebrationSynth.playBirthdayFanfare();
     if (onComplete) onComplete();
   };
 

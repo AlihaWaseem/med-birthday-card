@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { medicalSynth } from '../audio/medicalSynth';
+import { celebrationSynth } from '../audio/celebrationSynth';
 
 // ==========================================
 // CLOUD STAGE — ab YAQEEN wala fluffy badal:
@@ -66,7 +66,7 @@ export default function CloudStage({ index, name, meaning, theme = 'pink', golde
 
   // Sound jab cloud colorful ho
   useEffect(() => {
-    if (lit) medicalSynth.playSparkle();
+    if (lit) celebrationSynth.playSparkle();
   }, [lit]);
 
   const t = golden ? CLOUD_THEMES.gold : lit ? CLOUD_THEMES[theme] : CLOUD_THEMES.dull;

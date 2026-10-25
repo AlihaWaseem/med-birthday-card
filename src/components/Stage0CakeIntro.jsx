@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { medicalSynth } from '../audio/medicalSynth';
+import { celebrationSynth } from '../audio/celebrationSynth';
 import GalaxyHeartIntro from './GalaxyHeartIntro';
 
 // ==========================================
@@ -24,10 +24,10 @@ export default function Stage0CakeIntro({ onCandleClick }) {
     const t = setTimeout(() => {
       setStep((s) => {
         const next = s + 1;
-        if (next === 1 || next === 2 || next === 3) medicalSynth.playPillDispense(); // sponge layers
-        else if (next === 4) medicalSynth.playCutePop(); // cream
-        else if (next === 5) medicalSynth.playBeep(740, 0.1); // candles appear
-        else if (next === 6) medicalSynth.playSparkle(); // candles lit!
+        if (next === 1 || next === 2 || next === 3) celebrationSynth.playConfettiDispense(); // sponge layers
+        else if (next === 4) celebrationSynth.playCutePop(); // cream
+        else if (next === 5) celebrationSynth.playBeep(740, 0.1); // candles appear
+        else if (next === 6) celebrationSynth.playSparkle(); // candles lit!
         return next;
       });
     }, delays[Math.min(step, delays.length - 1)]);
@@ -44,13 +44,13 @@ export default function Stage0CakeIntro({ onCandleClick }) {
     }
     const t = setTimeout(() => {
       setLitCount((c) => c + 1);
-      medicalSynth.playBeep(880 + litCount * 90, 0.07);
+      celebrationSynth.playBeep(880 + litCount * 90, 0.07);
     }, 320);
     return () => clearTimeout(t);
   }, [step, litCount]);
 
   const handleCandleTap = () => {
-    medicalSynth.playSparkle();
+    celebrationSynth.playSparkle();
     if (onCandleClick) onCandleClick();
   };
 

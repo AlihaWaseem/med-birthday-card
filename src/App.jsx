@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import TelemetryHeader from './components/TelemetryHeader';
+import JourneyHeader from './components/JourneyHeader';
 import Stage0CakeIntro from './components/Stage0CakeIntro';
 import { Stage1AuthGate } from './components/Stage1AuthGate';
 import CloudJourney from './components/CloudJourney';
-import { Stage3XRayScanner } from './components/Stage3XRayScanner';
+import { Stage3DilKiTashreeh } from './components/Stage3DilKiTashreeh';
 import FireworksCanvas from './components/FireworksCanvas';
 import { ButterfliesOverlay } from './components/ButterfliesOverlay';
-import { medicalSynth } from './audio/medicalSynth';
+import { celebrationSynth } from './audio/celebrationSynth';
 
 // ==========================================
 // 🎂 ALISHA FIAZ — BIRTHDAY GIRL WORLD
@@ -33,13 +33,13 @@ export default function App() {
 
   const handleAuthSuccess = () => {
     setIsAuthenticated(true);
-    medicalSynth.playSparkle();
+    celebrationSynth.playSparkle();
     setStage(2);
   };
 
   const handleStageSelect = (s) => {
     if (s > 1 && !isAuthenticated) return;
-    medicalSynth.playBeep(660, 0.06);
+    celebrationSynth.playBeep(660, 0.06);
     setStage(s);
   };
 
@@ -50,7 +50,7 @@ export default function App() {
       <FireworksCanvas active={celebrationActive} onComplete={() => setCelebrationActive(false)} />
 
       {stage > 0 && (
-        <TelemetryHeader
+        <JourneyHeader
           stage={stage}
           isAuthenticated={isAuthenticated}
           onStageSelect={handleStageSelect}
@@ -63,7 +63,7 @@ export default function App() {
           <Stage0CakeIntro
             onCandleClick={() => {
               setStage(1);
-              medicalSynth.playBirthdayFanfare();
+              celebrationSynth.playBirthdayFanfare();
             }}
           />
         )}
@@ -84,7 +84,7 @@ export default function App() {
         )}
 
         {stage === 3 && (
-          <Stage3XRayScanner
+          <Stage3DilKiTashreeh
             onTriggerCelebration={() => setCelebrationActive(true)}
             bestieName={CONFIG.bestieName}
           />

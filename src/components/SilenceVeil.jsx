@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { medicalSynth } from '../audio/medicalSynth';
+import { celebrationSynth } from '../audio/celebrationSynth';
 
 // ==========================================
 // THE 12-SECOND SILENCE ☁️🖤
@@ -64,15 +64,15 @@ export default function SilenceVeil({ onLift }) {
     at(T.beat, () => {
       // Silence ke dauraan synth muted hai — ye ek dhakka
       // hi awaaz hai jo nikalne di jaati hai, phir foran khamoshi.
-      const wasMuted = medicalSynth.isMuted();
-      medicalSynth.setMuted(false);
-      medicalSynth.playHeartbeat(0.14);
-      setTimeout(() => medicalSynth.setMuted(wasMuted), 700);
+      const wasMuted = celebrationSynth.isMuted();
+      celebrationSynth.setMuted(false);
+      celebrationSynth.playHeartbeat(0.14);
+      setTimeout(() => celebrationSynth.setMuted(wasMuted), 700);
     });
     at(T.type, () => {
       setPhase('line');
       // 🎙️🥰 Pyari soft voice mein "Happy birthday" — black screen ke waqt
-      medicalSynth.speakHappyBirthday('Happy birthday');
+      celebrationSynth.speakHappyBirthday('Happy birthday');
       let i = 0;
       typeInterval.current = setInterval(() => {
         i += 1;

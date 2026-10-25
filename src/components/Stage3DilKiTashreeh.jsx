@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { medicalSynth } from '../audio/medicalSynth';
+import { celebrationSynth } from '../audio/celebrationSynth';
 
-export const Stage3XRayScanner = ({ onTriggerCelebration, bestieName = 'Alisha Fiaz' }) => {
+export const Stage3DilKiTashreeh = ({ onTriggerCelebration, bestieName = 'Alisha Fiaz' }) => {
   const containerRef = useRef(null);
   const [pos, setPos] = useState({ x: 260, y: 200 });
   const [isScanning, setIsScanning] = useState(false);
@@ -25,11 +25,11 @@ export const Stage3XRayScanner = ({ onTriggerCelebration, bestieName = 'Alisha F
     const maxDist = Math.hypot(rect.width / 2, rect.height / 2);
     const proximity = Math.max(0, 1 - dist / maxDist);
 
-    medicalSynth.updateXRayHum(proximity);
+    celebrationSynth.updateGlowHum(proximity);
 
     if (dist < 80 && !hasScannedHeart) {
       setHasScannedHeart(true);
-      medicalSynth.playSparkle();
+      celebrationSynth.playSparkle();
     }
   };
 
@@ -45,19 +45,19 @@ export const Stage3XRayScanner = ({ onTriggerCelebration, bestieName = 'Alisha F
 
   const handleMouseEnter = () => {
     setIsScanning(true);
-    medicalSynth.startXRayHum();
+    celebrationSynth.startGlowHum();
   };
 
   const handleMouseLeave = () => {
     setIsScanning(false);
-    medicalSynth.stopXRayHum();
+    celebrationSynth.stopGlowHum();
   };
 
   useEffect(() => {
     const handleKey = (e) => {
       if (e.key === 'z' || e.key === 'Z') {
         setIsZoomed((prev) => !prev);
-        medicalSynth.playBeep(700, 0.05);
+        celebrationSynth.playBeep(700, 0.05);
       }
     };
     window.addEventListener('keydown', handleKey);
@@ -95,7 +95,7 @@ export const Stage3XRayScanner = ({ onTriggerCelebration, bestieName = 'Alisha F
               key={m.id}
               onClick={() => {
                 setScannerMode(m.id);
-                medicalSynth.playCutePop();
+                celebrationSynth.playCutePop();
               }}
               className={`px-3 py-1 rounded-xl transition-all ${
                 scannerMode === m.id
@@ -112,7 +112,7 @@ export const Stage3XRayScanner = ({ onTriggerCelebration, bestieName = 'Alisha F
           <button
             onClick={() => {
               setIsZoomed(!isZoomed);
-              medicalSynth.playBeep(isZoomed ? 520 : 780, 0.08);
+              celebrationSynth.playBeep(isZoomed ? 520 : 780, 0.08);
             }}
             className={`px-3 py-1 rounded-xl border transition-all ${
               isZoomed
@@ -327,7 +327,7 @@ export const Stage3XRayScanner = ({ onTriggerCelebration, bestieName = 'Alisha F
       <div className="mt-8 text-center">
         <button
           onClick={() => {
-            medicalSynth.playBirthdayFanfare();
+            celebrationSynth.playBirthdayFanfare();
             if (onTriggerCelebration) onTriggerCelebration();
           }}
           className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-mono font-bold text-sm tracking-wide transition-all shadow-xl hover:shadow-pink-500/30 inline-flex items-center gap-2 group"

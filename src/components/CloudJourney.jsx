@@ -5,7 +5,7 @@ import FireworksCanvas from './FireworksCanvas';
 import SilenceVeil from './SilenceVeil';
 import StarNameReveal from './StarNameReveal';
 import { ButterfliesOverlay } from './ButterfliesOverlay';
-import { medicalSynth } from '../audio/medicalSynth';
+import { celebrationSynth } from '../audio/celebrationSynth';
 
 // ==========================================
 // CLOUD JOURNEY — sirf USER ki lines, kuch bhi
@@ -46,13 +46,13 @@ export default function CloudJourney({ onProceedToScanner, bestieName = 'Alisha 
     setWish(val);
     setEditing(false);
     try { localStorage.setItem(WISH_KEY, val); } catch (e) {}
-    medicalSynth.playSparkle();
+    celebrationSynth.playSparkle();
   };
 
   const startEditWish = () => {
     setDraft(wish);
     setEditing(true);
-    medicalSynth.playCutePop();
+    celebrationSynth.playCutePop();
   };
 
   // 🖤 Silence shuru — sound foran band (sync), taake koi sparkle
@@ -60,8 +60,8 @@ export default function CloudJourney({ onProceedToScanner, bestieName = 'Alisha 
   const startSilence = () => {
     if (silenceRan.current) return;
     silenceRan.current = true;
-    muteBeforeSilence.current = medicalSynth.isMuted();
-    medicalSynth.setMuted(true);
+    muteBeforeSilence.current = celebrationSynth.isMuted();
+    celebrationSynth.setMuted(true);
     setSilenceOn(true);
   };
 
@@ -89,7 +89,7 @@ export default function CloudJourney({ onProceedToScanner, bestieName = 'Alisha 
   // 🎵 Veil uthta hi: sound wapas, Cloud 7 par scroll, song shuru
   //   aur 7th cloud aate hi FIREWORKS KHUD-Ba-KHUD 🎉
   const handleSilenceLift = () => {
-    medicalSynth.setMuted(muteBeforeSilence.current);
+    celebrationSynth.setMuted(muteBeforeSilence.current);
     setSilenceDone(true);
     setSilenceOn(false);
     setTimeout(() => {
@@ -104,7 +104,7 @@ export default function CloudJourney({ onProceedToScanner, bestieName = 'Alisha 
     if (!songStarted) {
       setSongStarted(true);
       // Pehle naam aasman par likha jaye (~3s), phir music box
-      setTimeout(() => medicalSynth.playBirthdaySong(2), 3400);
+      setTimeout(() => celebrationSynth.playBirthdaySong(2), 3400);
     }
   };
 
@@ -118,14 +118,14 @@ export default function CloudJourney({ onProceedToScanner, bestieName = 'Alisha 
     }
     if (!songStarted && silenceDone) {
       setSongStarted(true);
-      setTimeout(() => medicalSynth.playBirthdaySong(2), 600);
+      setTimeout(() => celebrationSynth.playBirthdaySong(2), 600);
     }
   };
 
   // 🎆 Button: sirf fireworks replay (song chal rahi hai — fanfare stack NAHI)
   const handleGrandFinale = () => {
     setCelebrationActive(true);
-    medicalSynth.playSparkle();
+    celebrationSynth.playSparkle();
   };
 
   // Sirf aik line dikhane ka simple style
@@ -142,7 +142,7 @@ export default function CloudJourney({ onProceedToScanner, bestieName = 'Alisha 
       <FireworksCanvas active={celebrationActive} onComplete={() => setCelebrationActive(false)} />
       <CloudDoll stage={activeStage} total={7} />
 
-      {/* Header (TelemetryHeader ke neeche) */}
+      {/* Header (JourneyHeader ke neeche) */}
       <header className="fixed top-[72px] inset-x-0 z-30 flex justify-center pointer-events-none">
         <div className="cute-glass rounded-full px-4 sm:px-5 py-2 flex items-center gap-2 sm:gap-3 text-xs font-mono text-pink-200 pointer-events-auto shadow-lg">
           <span className="text-base">🦋</span>
@@ -211,7 +211,7 @@ export default function CloudJourney({ onProceedToScanner, bestieName = 'Alisha 
               <input
                 type="text"
                 value={draft}
-                onChange={(e) => { setDraft(e.target.value.slice(0, 120)); medicalSynth.playCutePop(); }}
+                onChange={(e) => { setDraft(e.target.value.slice(0, 120)); celebrationSynth.playCutePop(); }}
                 placeholder="Apni ek line likho…"
                 maxLength={120}
                 className="flex-1 px-4 py-2.5 rounded-xl bg-slate-950/60 border border-pink-400/50 text-white font-mono text-sm placeholder:text-pink-200/50 focus:outline-none focus:border-amber-300 transition-colors"
@@ -273,7 +273,7 @@ export default function CloudJourney({ onProceedToScanner, bestieName = 'Alisha 
             {onProceedToScanner && (
               <button
                 onClick={() => {
-                  medicalSynth.playSparkle();
+                  celebrationSynth.playSparkle();
                   onProceedToScanner();
                 }}
                 className="block w-full mt-3 px-5 py-2.5 rounded-2xl bg-slate-900/90 border border-pink-500/50 text-pink-200 hover:border-pink-400 hover:text-white font-mono text-xs font-bold tracking-wide transition-all"

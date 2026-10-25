@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { medicalSynth } from '../audio/medicalSynth';
+import { celebrationSynth } from '../audio/celebrationSynth';
 
 export const Stage1AuthGate = ({ 
   onSuccess, 
@@ -39,7 +39,7 @@ export const Stage1AuthGate = ({
     } else {
       const nextCount = clickCount + 1;
       setClickCount(nextCount);
-      medicalSynth.playBeep(520 + nextCount * 140, 0.08);
+      celebrationSynth.playBeep(520 + nextCount * 140, 0.08);
 
       if (nextCount >= 3) {
         triggerCuteOverride('TIN DAFE BUTTERFLY TAP');
@@ -49,7 +49,7 @@ export const Stage1AuthGate = ({
   };
 
   const triggerCuteOverride = (reason) => {
-    medicalSynth.playSparkle();
+    celebrationSynth.playSparkle();
     setShowCuteOverride(true);
     const logs = [
       `🚨 ALERT: itni pyaari ke system ne kaam chhor diya! (${reason})`,
@@ -62,7 +62,7 @@ export const Stage1AuthGate = ({
     logs.forEach((log, idx) => {
       setTimeout(() => {
         setCuteLogs((prev) => [...prev, log]);
-        medicalSynth.playCutePop();
+        celebrationSynth.playCutePop();
       }, idx * 280);
     });
 
@@ -75,14 +75,14 @@ export const Stage1AuthGate = ({
   const handleOverrideClick = () => {
     if (!overrideReady) return;
     setOverrideReady(false);
-    medicalSynth.playSparkle();
+    celebrationSynth.playSparkle();
     onSuccess();
   };
 
   const handleInputChange = (e) => {
     const val = e.target.value.replace(/\D/g, '').slice(0, 4);
     setPasscode(val);
-    medicalSynth.playCutePop();
+    celebrationSynth.playCutePop();
     if (onPasscodeChange) onPasscodeChange(val);
 
     if (e.target.value.toLowerCase().includes('blue') || e.target.value.toLowerCase().includes('love') || e.target.value.toLowerCase().includes('alisha')) {
@@ -97,18 +97,18 @@ export const Stage1AuthGate = ({
 
   const validateCode = (codeToTest) => {
     setIsSubmitting(true);
-    medicalSynth.playBeep(880, 0.1);
+    celebrationSynth.playBeep(880, 0.1);
 
     setTimeout(() => {
       if (codeToTest === correctPasscode || codeToTest === '1234' || codeToTest === '0000') {
         setStatusMessage('FILE KHUL GAYI: WELCOME ALISHA FIAZ! 🦋✨');
         setIsError(false);
-        medicalSynth.playSparkle();
+        celebrationSynth.playSparkle();
         setTimeout(() => onSuccess(), 400);
       } else {
         setIsError(true);
         setStatusMessage('OOPS! WRONG PIN 💔 HINT: HER BIRTHDAY (DDMM)');
-        medicalSynth.playBeep(320, 0.2);
+        celebrationSynth.playBeep(320, 0.2);
         setIsSubmitting(false);
       }
     }, 500);

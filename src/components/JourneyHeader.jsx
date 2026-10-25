@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { medicalSynth } from '../audio/medicalSynth';
+import { celebrationSynth } from '../audio/celebrationSynth';
 
-export default function TelemetryHeader({
+export default function JourneyHeader({
   stage = 1,
   isAuthenticated = false,
   onStageSelect,
   bestieName = 'Alisha Fiaz'
 }) {
-  const [muted, setMuted] = useState(medicalSynth.isUserMuted());
+  const [muted, setMuted] = useState(celebrationSynth.isUserMuted());
 
   const toggleMute = () => {
-    const nowMuted = medicalSynth.toggleUserMuted();
+    const nowMuted = celebrationSynth.toggleUserMuted();
     setMuted(nowMuted);
-    if (!nowMuted) medicalSynth.playSparkle();
+    if (!nowMuted) celebrationSynth.playSparkle();
   };
 
   const stageLabels = {

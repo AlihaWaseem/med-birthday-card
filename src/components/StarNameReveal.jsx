@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { medicalSynth } from '../audio/medicalSynth';
+import { celebrationSynth } from '../audio/celebrationSynth';
 
 // ==========================================
 // STAR NAME REVEAL ✨
@@ -37,12 +37,12 @@ export default function StarNameReveal({
       const freq = SCALE[noteIndex % SCALE.length];
       noteIndex += 1;
       timers.current.push(
-        setTimeout(() => medicalSynth.playBeep(freq, 0.5, 'sine', 0.07), letterDelay(i) * 1000)
+        setTimeout(() => celebrationSynth.playBeep(freq, 0.5, 'sine', 0.07), letterDelay(i) * 1000)
       );
     });
     // Naam poora hote he ek chhoti si chime
     timers.current.push(
-      setTimeout(() => medicalSynth.playSparkle(), (lastLetterAt + 0.45) * 1000)
+      setTimeout(() => celebrationSynth.playSparkle(), (lastLetterAt + 0.45) * 1000)
     );
     return () => {
       timers.current.forEach(clearTimeout);

@@ -4,8 +4,8 @@
 let audioCtx = null;
 let isMuted = false;
 let userMuted = false; // MUTE button ki asli intent (voice bhi isse chalti hai)
-let scannerOscillator = null;
-let scannerGainNode = null;
+let glowOscillator = null;
+let glowGainNode = null;
 let cachedVoice = null;
 
 // Web Speech se ek pyari soft voice chunna (English female preferred)
@@ -46,16 +46,16 @@ function getAudioContext() {
   return audioCtx;
 }
 
-export const medicalSynth = {
+export const celebrationSynth = {
   isMuted() {
     return isMuted;
   },
 
   setMuted(muted) {
     isMuted = muted;
-    if (muted && scannerGainNode && audioCtx) {
+    if (muted && glowGainNode && audioCtx) {
       try {
-        scannerGainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+        glowGainNode.gain.setValueAtTime(0, audioCtx.currentTime);
       } catch (e) {}
     }
   },
@@ -101,7 +101,7 @@ export const medicalSynth = {
     } catch (e) {}
   },
 
-  // Sweet gentle heart monitor chime
+  // Sweet gentle music-box chime
   playBeep(freq = 660, duration = 0.12, type = 'sine', volume = 0.12) {
     if (isMuted) return;
     const ctx = getAudioContext();
@@ -148,7 +148,7 @@ export const medicalSynth = {
     } catch (e) {}
   },
 
-  // Warm gentle cardiac 'lub-dub' heart flutter
+  // Warm gentle 'lub-dub' heart flutter
   playHeartbeat(volume = 0.35) {
     if (isMuted) return;
     const ctx = getAudioContext();
@@ -208,8 +208,8 @@ export const medicalSynth = {
     } catch (e) {}
   },
 
-  // Cuteness Overload Emergency Alarm
-  playCodeBlueSiren(repeats = 3) {
+  // Cuteness Overload Alarm
+  playCutenessAlarm(repeats = 3) {
     if (isMuted) return;
     const ctx = getAudioContext();
     if (!ctx) return;
@@ -236,58 +236,58 @@ export const medicalSynth = {
     } catch (e) {}
   },
 
-  // Cute warm scanning hum
-  startXRayHum() {
+  // Cute warm constellation-glow hum
+  startGlowHum() {
     if (isMuted) return;
     const ctx = getAudioContext();
-    if (!ctx || scannerOscillator) return;
+    if (!ctx || glowOscillator) return;
 
     try {
-      scannerOscillator = ctx.createOscillator();
-      scannerGainNode = ctx.createGain();
+      glowOscillator = ctx.createOscillator();
+      glowGainNode = ctx.createGain();
 
-      scannerOscillator.type = 'sine';
-      scannerOscillator.frequency.setValueAtTime(220, ctx.currentTime);
+      glowOscillator.type = 'sine';
+      glowOscillator.frequency.setValueAtTime(220, ctx.currentTime);
 
-      scannerGainNode.gain.setValueAtTime(0.001, ctx.currentTime);
-      scannerGainNode.gain.linearRampToValueAtTime(0.06, ctx.currentTime + 0.1);
+      glowGainNode.gain.setValueAtTime(0.001, ctx.currentTime);
+      glowGainNode.gain.linearRampToValueAtTime(0.06, ctx.currentTime + 0.1);
 
-      scannerOscillator.connect(scannerGainNode);
-      scannerGainNode.connect(ctx.destination);
-      scannerOscillator.start();
+      glowOscillator.connect(glowGainNode);
+      glowGainNode.connect(ctx.destination);
+      glowOscillator.start();
     } catch (e) {}
   },
 
-  updateXRayHum(proximity) {
-    if (!scannerOscillator || !scannerGainNode || isMuted || !audioCtx) return;
+  updateGlowHum(proximity) {
+    if (!glowOscillator || !glowGainNode || isMuted || !audioCtx) return;
     try {
       const targetFreq = 220 + proximity * 180; // 220Hz to 400Hz (warm gentle melody tone)
       const targetVol = 0.03 + proximity * 0.08;
-      scannerOscillator.frequency.setTargetAtTime(targetFreq, audioCtx.currentTime, 0.05);
-      scannerGainNode.gain.setTargetAtTime(targetVol, audioCtx.currentTime, 0.05);
+      glowOscillator.frequency.setTargetAtTime(targetFreq, audioCtx.currentTime, 0.05);
+      glowGainNode.gain.setTargetAtTime(targetVol, audioCtx.currentTime, 0.05);
     } catch (e) {}
   },
 
-  stopXRayHum() {
-    if (!scannerGainNode || !audioCtx) return;
+  stopGlowHum() {
+    if (!glowGainNode || !audioCtx) return;
     try {
-      scannerGainNode.gain.linearRampToValueAtTime(0.0001, audioCtx.currentTime + 0.1);
+      glowGainNode.gain.linearRampToValueAtTime(0.0001, audioCtx.currentTime + 0.1);
       setTimeout(() => {
-        if (scannerOscillator) {
+        if (glowOscillator) {
           try {
-            scannerOscillator.stop();
-            scannerOscillator.disconnect();
+            glowOscillator.stop();
+            glowOscillator.disconnect();
           } catch (e) {}
-          scannerOscillator = null;
+          glowOscillator = null;
         }
       }, 120);
     } catch (e) {
-      scannerOscillator = null;
+      glowOscillator = null;
     }
   },
 
-  // Cute Pill Rattling / Love Capsule dispenser
-  playPillDispense() {
+  // Cute sprinkles / confetti dispenser
+  playConfettiDispense() {
     if (isMuted) return;
     const ctx = getAudioContext();
     if (!ctx) return;
